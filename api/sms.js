@@ -1,8 +1,41 @@
+const LINEUPS = Object.freeze({
+  lite: { name: "TV Lite", pdf: "1FvtG4fhgVxEWJz139z6AqZ-tID7ER52t", png: "1QekQujrHkFWIzmCQ4ctQe1Bc4DvCboPZ" },
+  ep: { name: "Entertainment Pack", pdf: "119VApZhKP9P0ytb3f3ymLVWQp6BNAetA", png: "1A8fhw2tD0QowWlCDsHrVOWYnj2_ZCAcG" },
+  epp: { name: "Entertainment Pack +", pdf: "1IR3AiJ8R-9aXSLNm2HPUVliLhacZMYmV", png: "18su4uKUsd7KAdFOBxlIcOZByJKu8PjQ5" },
+  sv: { name: "Sports View", pdf: "11EnBMuqBUl0dZSPCy_NVjBoODXme7rIJ", png: "1NYgIvWFoOQ7OMZd9jOZElmAV7HXmeLNs" }
+});
+
+function phoneNumber(raw) {
+  if (typeof raw !== "string" || !/^[+0-9\s().-]+$/.test(raw)) return null;
+  let digits = raw.replace(/[^0-9]/g, "");
+  if (digits.length === 11 && digits[0] === "1") digits = digits.slice(1);
+  return /^[2-9][0-9]{2}[2-9][0-9]{6}$/.test(digits) ? "+1" + digits : null;
+}
+
 export default function handler(req, res) {
-  const message =
+  let message =
     "Hey its Valentino over at Spectrum! Just wanted to reach out and thank you for allowing me to help you today. For future references, if you need anything Spectrum related or have any questions about your services, reply to this message and I'll get back to you with an answer. Have a great day!";
 
-  const smsUrl = `sms:?body=${encodeURIComponent(message)}`;
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  const query = req.query || {};
+  const key = query.pack;
+  const hasPack = key !== undefined;
+  const phone = query.to === undefined ? "" : phoneNumber(query.to);
+  if (phone === null || (hasPack && (typeof key !== "string" || !Object.prototype.hasOwnProperty.call(LINEUPS, key) || !phone))) {
+    res.statusCode = 400;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.end("Specify pack=lite, ep, epp, or sv and one valid US number in to.");
+    return;
+  }
+  if (hasPack) {
+    const pack = LINEUPS[key];
+    const file = id => `https://drive.google.com/file/d/${id}/view`;
+    message = `Hi! Here is the Spectrum ${pack.name} channel lineup.\n\nPDF: ${file(pack.pdf)}\n\nImage: ${file(pack.png)}\n\nLet me know if you have any questions!`;
+  }
+  const encodedBody = encodeURIComponent(message);
+  const smsUrl = `sms:${phone}?body=${encodedBody}`;
+  const iosUrl = `sms:${phone}&body=${encodedBody}`;
 
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("Content-Type", "text/html; charset=utf-8");
@@ -49,7 +82,12 @@ export default function handler(req, res) {
     a.btn:active { opacity: 0.85; }
   </style>
   <script>
-    window.location.href = ${JSON.stringify(smsUrl)};
+    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const smsUrl = ios ? ${JSON.stringify(iosUrl)} : ${JSON.stringify(smsUrl)};
+    window.location.href = smsUrl;
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("a.btn").href = smsUrl;
+    });
   </script>
 </head>
 <body>
