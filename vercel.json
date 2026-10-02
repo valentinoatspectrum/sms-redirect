@@ -1,0 +1,44 @@
+{
+  "redirects": [
+    {
+      "source": "/lite",
+      "destination": "https://drive.google.com/file/d/1FvtG4fhgVxEWJz139z6AqZ-tID7ER52t/view",
+      "permanent": false
+    },
+    {
+      "source": "/lite/image",
+      "destination": "https://drive.google.com/file/d/1QekQujrHkFWIzmCQ4ctQe1Bc4DvCboPZ/view",
+      "permanent": false
+    },
+    {
+      "source": "/ep",
+      "destination": "https://drive.google.com/file/d/119VApZhKP9P0ytb3f3ymLVWQp6BNAetA/view",
+      "permanent": false
+    },
+    {
+      "source": "/ep/image",
+      "destination": "https://drive.google.com/file/d/1A8fhw2tD0QowWlCDsHrVOWYnj2_ZCAcG/view",
+      "permanent": false
+    },
+    {
+      "source": "/epp",
+      "destination": "https://drive.google.com/file/d/1IR3AiJ8R-9aXSLNm2HPUVliLhacZMYmV/view",
+      "permanent": false
+    },
+    {
+      "source": "/epp/image",
+      "destination": "https://drive.google.com/file/d/18su4uKUsd7KAdFOBxlIcOZByJKu8PjQ5/view",
+      "permanent": false
+    },
+    {
+      "source": "/sv",
+      "destination": "https://drive.google.com/file/d/11EnBMuqBUl0dZSPCy_NVjBoODXme7rIJ/view",
+      "permanent": false
+    },
+    {
+      "source": "/sv/image",
+      "destination": "https://drive.google.com/file/d/1NYgIvWFoOQ7OMZd9jOZElmAV7HXmeLNs/view",
+      "permanent": false
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 const LINEUPS = Object.freeze({
-  lite: { name: "TV Lite", pdf: "1FvtG4fhgVxEWJz139z6AqZ-tID7ER52t", png: "1QekQujrHkFWIzmCQ4ctQe1Bc4DvCboPZ" },
-  ep: { name: "Entertainment Pack", pdf: "119VApZhKP9P0ytb3f3ymLVWQp6BNAetA", png: "1A8fhw2tD0QowWlCDsHrVOWYnj2_ZCAcG" },
-  epp: { name: "Entertainment Pack +", pdf: "1IR3AiJ8R-9aXSLNm2HPUVliLhacZMYmV", png: "18su4uKUsd7KAdFOBxlIcOZByJKu8PjQ5" },
-  sv: { name: "Sports View", pdf: "11EnBMuqBUl0dZSPCy_NVjBoODXme7rIJ", png: "1NYgIvWFoOQ7OMZd9jOZElmAV7HXmeLNs" }
+  lite: { name: "TV Lite" },
+  ep: { name: "Entertainment Pack" },
+  epp: { name: "Entertainment Pack +" },
+  sv: { name: "Sports View" }
 });
 
 function phoneNumber(raw) {
@@ -30,8 +30,8 @@ export default function handler(req, res) {
   }
   if (hasPack) {
     const pack = LINEUPS[key];
-    const file = id => `https://drive.google.com/file/d/${id}/view`;
-    message = `Hi! Here is the Spectrum ${pack.name} channel lineup.\n\nPDF: ${file(pack.pdf)}\n\nImage: ${file(pack.png)}\n\nLet me know if you have any questions!`;
+    const lineupUrl = `https://sms-redirect-ten.vercel.app/${key}`;
+    message = `Hi! Here is the Spectrum ${pack.name} channel lineup.\n\nPDF: ${lineupUrl}\n\nImage: ${lineupUrl}/image\n\nLet me know if you have any questions!`;
   }
   const encodedBody = encodeURIComponent(message);
   const smsUrl = `sms:${phone}?body=${encodedBody}`;

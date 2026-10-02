@@ -23,6 +23,14 @@ Lineup requests require one valid US recipient. Formatted numbers and a leading 
 
 The page immediately attempts to open the SMS composer, with iOS-specific SMS syntax and a fallback button if the browser blocks automatic opening.
 
+## Customer file links
+
+The production domain is `https://sms-redirect-ten.vercel.app`.
+`/lite`, `/ep`, `/epp`, and `/sv` open the corresponding PDF.
+Append `/image` to open that pack's PNG. These public routes are for customers viewing a lineup; `/api/sms?pack=KEY&to=NUMBER` opens the sender's Messages draft.
+
+The fixed file destinations are defined in `vercel.json` as temporary redirects so they can be updated without permanent browser caches. Drafts use the same customer routes.
+
 ## Deploy
 
 In [Vercel New Project](https://vercel.com/new), import `valentinoatspectrum/sms-redirect` and deploy the repository root. This function requires no environment variables or external SMS service.
@@ -31,4 +39,4 @@ Use the new project's production domain for `/api/sms` links. The original repos
 
 ## Safety
 
-Recipients are validated and lineup URLs are fixed in the function. No arbitrary redirect URL or message body can be supplied. Responses use `Cache-Control: no-store` and `Referrer-Policy: no-referrer`.
+Recipients are validated and lineup destinations are fixed in `vercel.json`. No arbitrary redirect URL or message body can be supplied. Responses use `Cache-Control: no-store` and `Referrer-Policy: no-referrer`.
