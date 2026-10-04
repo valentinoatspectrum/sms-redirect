@@ -39,6 +39,11 @@
       "source": "/sv/image",
       "destination": "https://drive.google.com/file/d/1NYgIvWFoOQ7OMZd9jOZElmAV7HXmeLNs/view",
       "permanent": false
+    },
+    {
+      "source": "/az",
+      "destination": "https://drive.google.com/file/d/1QVSWIar3hsVTthMI0kui8xnktLA2G4xe/view",
+      "permanent": false
     }
   ]
 }
