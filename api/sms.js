@@ -32,7 +32,7 @@ export default function handler(req, res) {
   if (hasPack) {
     const pack = LINEUPS[key];
     const lineupUrl = `https://sms-redirect-ten.vercel.app/${key}`;
-    message = `Hi! Here is the Spectrum ${pack.name} channel lineup.\n\nPDF: ${lineupUrl}\n\nImage: ${lineupUrl}/image\n\nLet me know if you have any questions!`;
+    message = key === "az"\n      ? `Hi! Here is the Spectrum ${pack.name} channel lineup.\\n\\nPDF: ${lineupUrl}\\n\\nLet me know if you have any questions!`\n      : `Hi! Here is the Spectrum ${pack.name} channel lineup.\\n\\nPDF: ${lineupUrl}\\n\\nImage: ${lineupUrl}/image\\n\\nLet me know if you have any questions!`;
   }
   const encodedBody = encodeURIComponent(message);
   const smsUrl = `sms:${phone}?body=${encodedBody}`;
