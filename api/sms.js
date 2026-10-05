@@ -2,7 +2,8 @@ const LINEUPS = Object.freeze({
   lite: { name: "TV Lite" },
   ep: { name: "Entertainment Pack" },
   epp: { name: "Entertainment Pack +" },
-  sv: { name: "Sports View" }
+  sv: { name: "Sports View" },
+  az: { name: "Arizona" }
 });
 
 function phoneNumber(raw) {
@@ -25,7 +26,7 @@ export default function handler(req, res) {
   if (phone === null || (hasPack && (typeof key !== "string" || !Object.prototype.hasOwnProperty.call(LINEUPS, key) || !phone))) {
     res.statusCode = 400;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    res.end("Specify pack=lite, ep, epp, or sv and one valid US number in to.");
+    res.end("Specify pack=lite, ep, epp, sv, or az and one valid US number in to.");
     return;
   }
   if (hasPack) {
